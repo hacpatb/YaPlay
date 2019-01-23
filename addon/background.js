@@ -15,7 +15,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             refreshMute(request.isMute);
             break;
     }
-    sendResponse({ response: "ok" });
+    sendResponse({ response: 'ok' });
 });
 
 const yandexPlayerUrl = 'https://music.yandex.ru/*';
@@ -31,7 +31,7 @@ let timerId = null;
 function refreshMute(isMute) {
     if (isMute) {
         browser.contextMenus.update('mute-tab-menu-item', {
-            title: 'Unmute',
+            title: browser.i18n.getMessage('unmute'),
             icons: {
                 16: 'icons/unmute_16.png',
                 32: 'icons/unmute_32.png'
@@ -39,7 +39,7 @@ function refreshMute(isMute) {
         });
     } else {
         browser.contextMenus.update('mute-tab-menu-item', {
-            title: 'Mute',
+            title: browser.i18n.getMessage('mute'),
             icons: {
                 16: 'icons/mute_16.png',
                 32: 'icons/mute_32.png'
@@ -66,7 +66,7 @@ function refreshButton(isPlay) {
             }
         });
         browser.contextMenus.update('toggle-playback-menu-item', {
-            title: 'Pause',
+            title: browser.i18n.getMessage('pause'),
             icons: {
                 16: 'icons/pause_16.png',
                 32: 'icons/pause_32.png'
@@ -86,7 +86,7 @@ function refreshButton(isPlay) {
             }
         });
         browser.contextMenus.update('toggle-playback-menu-item', {
-            title: 'Play',
+            title: browser.i18n.getMessage('play'),
             icons: {
                 16: 'icons/play_16.png',
                 32: 'icons/play_32.png'
@@ -158,7 +158,7 @@ function playBtnClick() {
 }
 /* Обработка горячих клавиш */
 function handlerCommand(command) {
-    if (command == "play") {
+    if (command == 'play') {
         playBtnClick();
     }
 }
@@ -166,7 +166,7 @@ function handlerCommand(command) {
 /* Контекстное меню */
 browser.contextMenus.create({
     id: 'toggle-playback-menu-item',
-    title: 'Play',
+    title: browser.i18n.getMessage('play'),
     contexts: ['browser_action'],
     icons: {
         16: 'icons/play_16.png',
@@ -176,7 +176,7 @@ browser.contextMenus.create({
 });
 browser.contextMenus.create({
     id: 'previous-song-menu-item',
-    title: 'Previous',
+    title: browser.i18n.getMessage('previous'),
     contexts: ['browser_action'],
     icons: {
         16: 'icons/previoust_16.png',
@@ -186,7 +186,7 @@ browser.contextMenus.create({
 });
 browser.contextMenus.create({
     id: 'next-song-menu-item',
-    title: 'Next',
+    title: browser.i18n.getMessage('next'),
     contexts: ['browser_action'],
     icons: {
         16: 'icons/next_16.png',
@@ -197,7 +197,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
     id: 'mute-tab-menu-item',
-    title: 'Mute',
+    title: browser.i18n.getMessage('mute'),
     contexts: ['browser_action'],
     icons: {
         16: 'icons/mute_16.png',
