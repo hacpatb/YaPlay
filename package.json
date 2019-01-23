@@ -1,0 +1,18 @@
+{
+    "name": "yandex-play",
+    "homepage": "https://github.com/hacpatb/YaPlay",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hacpatb/YaPlay.git"
+    },
+    "scripts": {
+        "start": "web-ext run -s addon/ --browser-console",
+        "clean": "shx rm -f build/*.zip",
+        "build": "web-ext build -s addon/ -a build/",
+        "lint": "web-ext lint -s addon/"
+    },
+    "devDependencies": {
+        "web-ext": "*",
+        "shx": "*"
+    }
+}
