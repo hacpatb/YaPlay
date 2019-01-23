@@ -15,6 +15,7 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
             refreshMute(request.isMute);
             break;
     }
+    sendResponse({ response: "ok" });
 });
 
 const yandexPlayerUrl = 'https://music.yandex.ru/*';

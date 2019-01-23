@@ -8,7 +8,7 @@ let titleObserver = new MutationObserver(function (mutations) {
             action: 'setTitle',
             title: mutation.target.innerText
         })
-            .then(handleResponse, handleError);
+            .then(handleResponse, onError);
     });
 });
 titleObserver.observe(title, config);
@@ -25,7 +25,7 @@ let butObserver1 = new MutationObserver(function (mutations) {
                 action: 'setPlay',
                 isPlayed: isPlayed
             })
-                .then(handleResponse, handleError);
+                .then(handleResponse, onError);
         }
 
     });
@@ -44,14 +44,20 @@ let volumeObserver1 = new MutationObserver(function (mutations) {
                 action: 'setMute',
                 isMute: isMute
             })
-                .then(handleResponse, handleError);
+                .then(handleResponse, onError);
         }
 
     });
 });
 volumeObserver1.observe(volumeTarget, config);
 
+function handleResponse(message) {
+    console.log(`[YaPlay] Message from background: ${message.response}`);
+}
 
+function onError(error) {
+    console.log(`[YaPlay] error: ${error}`);
+}
 
 
 // later, you can stop observing
