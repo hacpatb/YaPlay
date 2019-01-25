@@ -20,6 +20,12 @@
   "unmute": {
     "message": "Unmute"
   },
+  "volumeUp": {
+    "message": "Volume Up"
+  },
+  "volumeDown": {
+    "message": "Volume Down"
+  },
   "settings": {
     "message": "Settings"
   },

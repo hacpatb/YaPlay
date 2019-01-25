@@ -1,7 +1,7 @@
 /*Событие нажатия на кнопку */
 browser.browserAction.onClicked.addListener(playBtnClick);
 /*Событие commands из манифеста*/
-browser.commands.onCommand.addListener(handlerCommand);
+browser.commands.onCommand.addListener(hotKeyCommand);
 /*Обработчик сообщения */
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     switch (request['action']) {
@@ -23,6 +23,9 @@ const togglePlaybackCommand = 'toggle-playback';
 const previousSongCommand = 'previous-song';
 const nextSongCommand = 'next-song';
 const toogleMuteComand = 'toogle-mute';
+const volumeUpComand = 'volume-up';
+const volumeDownComand = 'volume-down';
+
 
 let isPressed = false;
 let timerId = null;
@@ -101,11 +104,12 @@ async function openYandexMusic() {
         url: yandexPlayerUrl.replace('*', '')
     })
 }
-
+/*
 function scriptFor(command) {
     switch (command) {
         case togglePlaybackCommand:
-            return scriptThatClicksOn('player-controls__btn_play', 'click');
+            break;
+        //return scriptThatClicksOn('player-controls__btn_play', 'click');
         case previousSongCommand:
             return scriptThatClicksOn('player-controls__btn_prev', 'click');
         case nextSongCommand:
@@ -124,7 +128,7 @@ function scriptThatClicksOn(actionName, eventType, keyCode) {
     };
     return '(' + script.toString().replace('kitty', actionName).replace('eventType', eventType) + ')()'
 }
-
+*/
 /* Выполнение скрипта */
 async function executeYandexMusicCommand(command) {
     console.log('[YaPlay] executing command: ', command);
@@ -134,10 +138,7 @@ async function executeYandexMusicCommand(command) {
         return
     }
     for (let tab of ymTabs) {
-        browser.tabs.executeScript(tab.id, {
-            runAt: 'document_start',
-            code: scriptFor(command)
-        })
+        browser.tabs.sendMessage(tab.id, { action: command })
     }
 }
 /* Двойное нажатие на кнопку */
@@ -155,7 +156,7 @@ function playBtnClick() {
     }
 }
 /* Обработка горячих клавиш */
-function handlerCommand(command) {
+function hotKeyCommand(command) {
     switch (command) {
         case 'play':
             executeYandexMusicCommand(togglePlaybackCommand).catch((msg) => { onError(msg) })
@@ -168,6 +169,12 @@ function handlerCommand(command) {
             break;
         case 'mute':
             executeYandexMusicCommand(toogleMuteComand).catch((msg) => { onError(msg) })
+            break;
+        case 'volumeUp':
+            executeYandexMusicCommand(volumeUpComand).catch((msg) => { onError(msg) })
+            break;
+        case 'volumeDown':
+            executeYandexMusicCommand(volumeDownComand).catch((msg) => { onError(msg) })
             break;
         default: console.log(`[YaPlay] Command ${command} not found `);
     }

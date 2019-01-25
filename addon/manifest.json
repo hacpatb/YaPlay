@@ -57,6 +57,18 @@
         "default": "Alt+4"
       },
       "description": "__MSG_mute__/__MSG_unmute__"
+    },
+    "volumeUp": {
+      "suggested_key": {
+        "default": "Alt+5"
+      },
+      "description": "__MSG_volumeUp__"
+    },
+    "volumeDown": {
+      "suggested_key": {
+        "default": "Alt+6"
+      },
+      "description": "__MSG_volumeDown__"
     }
   },
   "applications": {

@@ -20,6 +20,12 @@
   "unmute": {
     "message": "Включить звук"
   },
+  "volumeUp": {
+    "message": "Добавить громкость"
+  },
+  "volumeDown": {
+    "message": "Убавить громкость"
+  },
   "settings": {
     "message": "Настройки"
   },
