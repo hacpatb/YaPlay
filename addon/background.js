@@ -115,13 +115,11 @@ function scriptFor(command) {
     }
 }
 
-function scriptThatClicksOn(actionName, eventType) {
+function scriptThatClicksOn(actionName, eventType, keyCode) {
     let script = function () {
         let button = document.getElementsByClassName('kitty');
         if (button.length > 0) {
-            let clickEvent = document.createEvent('MouseEvents');
-            clickEvent.initEvent('eventType', true, true);
-            button[0].dispatchEvent(clickEvent);
+            button[0].dispatchEvent(new Event('eventType', { bubbles: true, cancelable: false }));
         }
     };
     return '(' + script.toString().replace('kitty', actionName).replace('eventType', eventType) + ')()'
@@ -158,8 +156,20 @@ function playBtnClick() {
 }
 /* Обработка горячих клавиш */
 function handlerCommand(command) {
-    if (command == 'play') {
-        playBtnClick();
+    switch (command) {
+        case 'play':
+            executeYandexMusicCommand(togglePlaybackCommand).catch((msg) => { onError(msg) })
+            break;
+        case 'previous':
+            executeYandexMusicCommand(previousSongCommand).catch((msg) => { onError(msg) })
+            break;
+        case 'next':
+            executeYandexMusicCommand(nextSongCommand).catch((msg) => { onError(msg) })
+            break;
+        case 'mute':
+            executeYandexMusicCommand(toogleMuteComand).catch((msg) => { onError(msg) })
+            break;
+        default: console.log(`[YaPlay] Command ${command} not found `);
     }
 }
 
@@ -205,6 +215,22 @@ browser.contextMenus.create({
     },
     onclick: () => executeYandexMusicCommand(toogleMuteComand).catch((msg) => { onError(msg) })
 });
+
+browser.contextMenus.create({
+    id: 'open-setting-menu-item',
+    title: browser.i18n.getMessage('Settings'),
+    contexts: ['browser_action'],
+    icons: {
+        16: 'icons/setting_16.png',
+        32: 'icons/setting_32.png'
+    },
+    onclick: () => browser.runtime.openOptionsPage()
+        .catch((err) => {
+            onError(err);
+            browser.tabs.create({ url: browser.extension.getURL('settings.html') })
+        })
+});
+
 
 /*Обработка ошибки */
 function onError(error) {

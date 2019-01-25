@@ -1,0 +1,3 @@
+[submodule "addon/shortcut-customize-ui"]
+	path = addon/shortcut-customize-ui
+	url = https://github.com/piroor/webextensions-lib-shortcut-customize-ui.git

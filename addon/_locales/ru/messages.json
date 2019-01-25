@@ -19,5 +19,19 @@
   },
   "unmute": {
     "message": "Включить звук"
+  },
+  "settings": {
+    "message": "Настройки"
+  },
+  "settingHotKeys": {
+    "message": "Настройка горячих клавиш"
+  },
+  "notificationContent": {
+    "message": "Список поддерживаемых сочетаний клавиш можно найти <a href=\"$URL$\">здесь</a>.",
+    "placeholders": {
+      "url": {
+        "content": "$1"
+      }
+    }
   }
 }

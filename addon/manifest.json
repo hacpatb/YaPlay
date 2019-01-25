@@ -3,10 +3,14 @@
   "name": "Yandex Play",
   "author": "Pave Goncharov",
   "description": "__MSG_extensionDescription__",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "default_locale": "en",
   "icons": {
     "64": "icons/play_64.png"
+  },
+  "options_ui": {
+    "page": "settings/settings.html",
+    "browser_style": true
   },
   "background": {
     "scripts": [
@@ -32,9 +36,27 @@
   "commands": {
     "play": {
       "suggested_key": {
-        "default": "Alt+P"
+        "default": "Alt+2"
       },
-      "description": "play/stop"
+      "description": "__MSG_play__/__MSG_pause__"
+    },
+    "previous": {
+      "suggested_key": {
+        "default": "Alt+1"
+      },
+      "description": "__MSG_previous__"
+    },
+    "next": {
+      "suggested_key": {
+        "default": "Alt+3"
+      },
+      "description": "__MSG_next__"
+    },
+    "mute": {
+      "suggested_key": {
+        "default": "Alt+4"
+      },
+      "description": "__MSG_mute__/__MSG_unmute__"
     }
   },
   "applications": {

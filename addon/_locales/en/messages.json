@@ -19,5 +19,19 @@
   },
   "unmute": {
     "message": "Unmute"
+  },
+  "settings": {
+    "message": "Settings"
+  },
+  "settingHotKeys": {
+    "message": "Binding hotkeys"
+  },
+  "notificationContent": {
+    "message": "List of supported shortcut keys names can be found <a href=\"$URL$\">here</a>.",
+    "placeholders": {
+      "url": {
+        "content": "$1"
+      }
+    }
   }
 }

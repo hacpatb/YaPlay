@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<style>
+		#hotkey.firefox .shortcut>label {
+			font-size: 1.2rem;
+			padding: 0.5em 0.5em;
+		}
+
+		#hotkey.firefox .key-combination * {
+			display: inline-block;
+			padding: 0.25em 0.5em;
+			margin: 0.2em 0.2em;
+			font-size: 1em;
+			line-height: 1.5em;
+			color: #444d56;
+			vertical-align: middle;
+			background-color: #fafbfc;
+			border: solid 1px #c6cbd1;
+			border-bottom-color: rgb(198, 203, 209);
+			border-bottom-color: #959da5;
+			border-radius: 3px;
+			box-shadow: inset 0 -1px 0 #959da5;
+		}
+
+		#hotkey.firefox .key-combination label,
+		#hotkey.firefox .key-combination label input[type="checkbox"] {
+			cursor: pointer;
+		}
+
+		#hotkey.firefox .key-combination input[type="text"] {
+			min-width: 9em;
+		}
+
+		#hotkey.firefox .key-combination button {
+			background-color: #eee;
+			cursor: help;
+		}
+
+		#hotkey.firefox h2 {
+			font: message-box;
+			font-size: 2rem;
+		}
+
+		#hotkey.firefox p {
+			font-size: 1.25rem;
+		}
+
+		#hotkey.firefox a {
+			color: inherit;
+			text-decoration: underline;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="hotkey"></div>
+	<script src="../shortcut-customize-ui/ShortcutCustomizeUI.js"></script>
+	<script src="settings.js"></script>
+</body>
+
+</html>
