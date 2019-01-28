@@ -4,18 +4,12 @@ browser.browserAction.onClicked.addListener(playBtnClick);
 browser.commands.onCommand.addListener(hotKeyCommand);
 /*Обработчик сообщения */
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    switch (request['action']) {
-        case 'setTitle':
-            browser.browserAction.setTitle({ title: request.title });
-            break;
-        case 'setPlay':
-            refreshButton(request.isPlayed);
-            break;
-        case 'setMute':
-            refreshMute(request.isMute);
-            break;
+    if (request['state']) {
+        refreshButton(request['state']['isPlaying']);
+        browser.browserAction.setTitle({ title: ` ${request['state']['artists'].map(artist => artist['title']).join(', ')} - ${request['state']['title']}` });
+        refreshMute(request['state']['volume'] == 0);
+
     }
-    sendResponse({ response: 'ok' });
 });
 
 const yandexPlayerUrl = 'https://music.yandex.ru/*';
@@ -27,8 +21,7 @@ const volumeUpComand = 'volume-up';
 const volumeDownComand = 'volume-down';
 
 
-let isPressed = false;
-let timerId = null;
+
 
 /* Обновление иконки звука */
 function refreshMute(isMute) {
@@ -49,7 +42,6 @@ function refreshMute(isMute) {
             }
         });
     }
-
 }
 
 /** Обновление иконки play */
@@ -131,7 +123,7 @@ function scriptThatClicksOn(actionName, eventType, keyCode) {
 */
 /* Выполнение скрипта */
 async function executeYandexMusicCommand(command) {
-    console.log('[YaPlay] executing command: ', command);
+    console.log('[YaPlay] executing command:', command);
     const ymTabs = await browser.tabs.query({ url: yandexPlayerUrl });
     if (ymTabs.length === 0) {
         openYandexMusic();
@@ -142,6 +134,8 @@ async function executeYandexMusicCommand(command) {
     }
 }
 /* Двойное нажатие на кнопку */
+let isPressed = false;
+let timerId = null;
 function playBtnClick() {
     if (isPressed) {
         clearTimeout(timerId);
@@ -225,7 +219,7 @@ browser.contextMenus.create({
 
 browser.contextMenus.create({
     id: 'open-setting-menu-item',
-    title: browser.i18n.getMessage('Settings'),
+    title: browser.i18n.getMessage('settings'),
     contexts: ['browser_action'],
     icons: {
         16: 'icons/setting_16.png',
