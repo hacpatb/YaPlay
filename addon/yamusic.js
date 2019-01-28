@@ -55,7 +55,7 @@ browser.runtime.onMessage.addListener(request => {
     let target = document.querySelector('body')
     let observer = new MutationObserver(mutation => {
         if (mutation[0].attributeName === 'data-unity-state' ||
-            mutation[0].attributeName === 'data-unity-supports') {
+            mutation[0].attributeName === 'data-unity-supports' || mutation[0].attributeName == 'class') {
             sendState();
         }
     })

@@ -6,13 +6,20 @@ browser.commands.onCommand.addListener(hotKeyCommand);
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request['state']) {
         refreshButton(request['state']['isPlaying']);
-        browser.browserAction.setTitle({ title: ` ${request['state']['artists'].map(artist => artist['title']).join(', ')} - ${request['state']['title']}` });
+        if (request['state']['artists']) {
+            browser.browserAction.setTitle({ title: ` ${request['state']['artists'].map(artist => artist['title']).join(', ')} - ${request['state']['title']}` });
+        }
         refreshMute(request['state']['volume'] == 0);
 
     }
 });
 
-const yandexPlayerUrl = 'https://music.yandex.ru/*';
+const yandexPlayerUrl = [
+    'https://music.yandex.ru/*',
+    'https://music.yandex.ua/*',
+    'https://radio.yandex.ru/*',
+    'https://radio.yandex.ua/*'
+];
 const togglePlaybackCommand = 'toggle-playback';
 const previousSongCommand = 'previous-song';
 const nextSongCommand = 'next-song';
@@ -93,7 +100,7 @@ function refreshButton(isPlay) {
 async function openYandexMusic() {
     await browser.tabs.create({
         pinned: true,
-        url: yandexPlayerUrl.replace('*', '')
+        url: yandexPlayerUrl[0].replace('*', '')
     })
 }
 /*
