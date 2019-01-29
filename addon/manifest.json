@@ -22,8 +22,11 @@
       "matches": [
         "*://music.yandex.ru/*",
         "*://music.yandex.ua/*",
+        "*://music.yandex.com/*",
+        "*://music.yandex.by/*",
         "*://radio.yandex.ru/*",
-        "*://radio.yandex.ua/*"
+        "*://radio.yandex.ua/*",
+        "*://radio.yandex.com/*"
       ],
       "js": [
         "yamusic.js"
@@ -82,8 +85,7 @@
   "permissions": [
     "notifications",
     "tabs",
-    "contextMenus",
-    "activeTab",
-    "<all_urls>"
+    "storage",
+    "contextMenus"
   ]
 }

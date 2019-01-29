@@ -4,6 +4,7 @@ browser.browserAction.onClicked.addListener(playBtnClick);
 browser.commands.onCommand.addListener(hotKeyCommand);
 /*Обработчик сообщения */
 browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request);
     if (request['state']) {
         refreshButton(request['state']['isPlaying']);
         if (request['state']['artists']) {
@@ -17,8 +18,11 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 const yandexPlayerUrl = [
     'https://music.yandex.ru/*',
     'https://music.yandex.ua/*',
+    'https://music.yandex.com/*',
+    'https://music.yandex.by/*',
     'https://radio.yandex.ru/*',
-    'https://radio.yandex.ua/*'
+    'https://radio.yandex.ua/*',
+    'https://radio.yandex.com/*'
 ];
 const togglePlaybackCommand = 'toggle-playback';
 const previousSongCommand = 'previous-song';
@@ -26,9 +30,7 @@ const nextSongCommand = 'next-song';
 const toogleMuteComand = 'toogle-mute';
 const volumeUpComand = 'volume-up';
 const volumeDownComand = 'volume-down';
-
-
-
+let setting = browser.storage.local.get();
 
 /* Обновление иконки звука */
 function refreshMute(isMute) {
@@ -103,31 +105,7 @@ async function openYandexMusic() {
         url: yandexPlayerUrl[0].replace('*', '')
     })
 }
-/*
-function scriptFor(command) {
-    switch (command) {
-        case togglePlaybackCommand:
-            break;
-        //return scriptThatClicksOn('player-controls__btn_play', 'click');
-        case previousSongCommand:
-            return scriptThatClicksOn('player-controls__btn_prev', 'click');
-        case nextSongCommand:
-            return scriptThatClicksOn('player-controls__btn_next', 'click');
-        case toogleMuteComand:
-            return scriptThatClicksOn('volume__btn', 'mousedown');
-    }
-}
 
-function scriptThatClicksOn(actionName, eventType, keyCode) {
-    let script = function () {
-        let button = document.getElementsByClassName('kitty');
-        if (button.length > 0) {
-            button[0].dispatchEvent(new Event('eventType', { bubbles: true, cancelable: false }));
-        }
-    };
-    return '(' + script.toString().replace('kitty', actionName).replace('eventType', eventType) + ')()'
-}
-*/
 /* Выполнение скрипта */
 async function executeYandexMusicCommand(command) {
     console.log('[YaPlay] executing command:', command);
@@ -140,6 +118,7 @@ async function executeYandexMusicCommand(command) {
         browser.tabs.sendMessage(tab.id, { action: command })
     }
 }
+
 /* Двойное нажатие на кнопку */
 let isPressed = false;
 let timerId = null;
@@ -156,6 +135,7 @@ function playBtnClick() {
         }, 300);
     }
 }
+
 /* Обработка горячих клавиш */
 function hotKeyCommand(command) {
     switch (command) {
@@ -192,6 +172,7 @@ browser.contextMenus.create({
     },
     onclick: () => executeYandexMusicCommand(togglePlaybackCommand).catch((msg) => { onError(msg) })
 });
+
 browser.contextMenus.create({
     id: 'previous-song-menu-item',
     title: browser.i18n.getMessage('previous'),
@@ -202,6 +183,7 @@ browser.contextMenus.create({
     },
     onclick: () => executeYandexMusicCommand(previousSongCommand).catch((msg) => { onError(msg) })
 });
+
 browser.contextMenus.create({
     id: 'next-song-menu-item',
     title: browser.i18n.getMessage('next'),
@@ -238,7 +220,6 @@ browser.contextMenus.create({
             browser.tabs.create({ url: browser.extension.getURL('settings.html') })
         })
 });
-
 
 /*Обработка ошибки */
 function onError(error) {
