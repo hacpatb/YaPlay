@@ -1,12 +1,12 @@
 let sendState = () => {
-    let api = window.wrappedJSObject.externalAPI
+    let api = window.wrappedJSObject.externalAPI;
     let state = {
         ...api.getCurrentTrack(),
         ...api.getControls(),
         isPlaying: api.isPlaying(),
         volume: api.getVolume() || 0
     }
-    browser.runtime.sendMessage({ state })
+    browser.runtime.sendMessage({ state });
 }
 
 browser.runtime.onMessage.addListener(request => {
@@ -27,11 +27,9 @@ browser.runtime.onMessage.addListener(request => {
                 break;
             case 'liked':
                 api.toggleLike();
-                //sendPlayerState() // toggleLike can't be detected by observer
                 break;
             case 'disliked':
                 api.toggleDislike();
-                //sendPlayerState() // toggleDislike can't be detected by observer
                 break;
             case 'volume-up':
                 api.setVolume(api.getVolume() + 0.1 > 1 ? 1 : api.getVolume() + 0.1);
@@ -69,5 +67,14 @@ browser.runtime.onMessage.addListener(request => {
         }
     });
     volumeObserver.observe(volumeTarget, config);
+
+    let radioTarget = document.querySelector('.slider__item');
+    let radioObserver = new MutationObserver(mutation => {
+        if (mutation[0].attributeName == 'data-b') {
+            sendState()
+        }
+    });
+    radioObserver.observe(radioTarget, config);
+
 })()
 
