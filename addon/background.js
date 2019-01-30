@@ -30,6 +30,7 @@ const nextSongCommand = 'next-song';
 const toogleMuteComand = 'toogle-mute';
 const volumeUpComand = 'volume-up';
 const volumeDownComand = 'volume-down';
+let setting = browser.storage.local.get();
 
 /* Обновление иконки звука */
 function refreshMute(isMute) {
