@@ -32,6 +32,12 @@
   "settingHotKeys": {
     "message": "Binding hotkeys"
   },
+  "copyLinkToSong": {
+    "message": "Copy Link"
+  },
+  "copyLinkToSongMessage": {
+    "message": "Link to song copied in buffer"
+  },
   "notificationContent": {
     "message": "List of supported shortcut keys names can be found <a href=\"$URL$\">here</a>.",
     "placeholders": {

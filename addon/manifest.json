@@ -69,6 +69,12 @@
         "default": "Alt+6"
       },
       "description": "__MSG_volumeDown__"
+    },
+    "copyLink": {
+      "suggested_key": {
+        "default": "Alt+7"
+      },
+      "description": "__MSG_copyLinkToSong__"
     }
   },
   "applications": {
@@ -81,6 +87,7 @@
     "tabs",
     "contextMenus",
     "activeTab",
+    "clipboardWrite",
     "<all_urls>"
   ]
 }

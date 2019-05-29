@@ -1,5 +1,5 @@
+let api = window.wrappedJSObject.externalAPI;
 let sendState = () => {
-    let api = window.wrappedJSObject.externalAPI
     let state = {
         ...api.getCurrentTrack(),
         ...api.getControls(),
@@ -7,6 +7,13 @@ let sendState = () => {
         volume: api.getVolume() || 0
     }
     browser.runtime.sendMessage({ state })
+}
+
+let copyLink = () => {
+    let buff = document.querySelector('#buff-link');
+    buff.value = (api.getCurrentTrack()) ? window.location.hostname + api.getCurrentTrack().link : ';)';
+    buff.select();
+    document.execCommand('copy');
 }
 
 browser.runtime.onMessage.addListener(request => {
@@ -39,6 +46,9 @@ browser.runtime.onMessage.addListener(request => {
             case 'volume-down':
                 api.setVolume(api.getVolume() - 0.1 < 0 ? 0 : api.getVolume() - 0.1);
                 break;
+            case 'copy-link':
+                copyLink();
+                break;
             default:
                 break;
         }
@@ -69,5 +79,11 @@ browser.runtime.onMessage.addListener(request => {
         }
     });
     volumeObserver.observe(volumeTarget, config);
+    
+    /* Элемент-буффер куда пихается ссылка на песню */
+    let newEl = document.createElement('input');
+    newEl.id = 'buff-link';
+    newEl.value= '';
+    document.body.append(newEl); 
 })()
 

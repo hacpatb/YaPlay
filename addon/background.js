@@ -16,11 +16,10 @@ const yandexPlayerUrl = 'https://music.yandex.ru/*';
 const togglePlaybackCommand = 'toggle-playback';
 const previousSongCommand = 'previous-song';
 const nextSongCommand = 'next-song';
-const toogleMuteComand = 'toogle-mute';
-const volumeUpComand = 'volume-up';
-const volumeDownComand = 'volume-down';
-
-
+const toogleMuteCommand = 'toogle-mute';
+const volumeUpCommand = 'volume-up';
+const volumeDownCommand = 'volume-down';
+const copyLinkToSongCommand = 'copy-link';
 
 
 /* Обновление иконки звука */
@@ -96,31 +95,7 @@ async function openYandexMusic() {
         url: yandexPlayerUrl.replace('*', '')
     })
 }
-/*
-function scriptFor(command) {
-    switch (command) {
-        case togglePlaybackCommand:
-            break;
-        //return scriptThatClicksOn('player-controls__btn_play', 'click');
-        case previousSongCommand:
-            return scriptThatClicksOn('player-controls__btn_prev', 'click');
-        case nextSongCommand:
-            return scriptThatClicksOn('player-controls__btn_next', 'click');
-        case toogleMuteComand:
-            return scriptThatClicksOn('volume__btn', 'mousedown');
-    }
-}
 
-function scriptThatClicksOn(actionName, eventType, keyCode) {
-    let script = function () {
-        let button = document.getElementsByClassName('kitty');
-        if (button.length > 0) {
-            button[0].dispatchEvent(new Event('eventType', { bubbles: true, cancelable: false }));
-        }
-    };
-    return '(' + script.toString().replace('kitty', actionName).replace('eventType', eventType) + ')()'
-}
-*/
 /* Выполнение скрипта */
 async function executeYandexMusicCommand(command) {
     console.log('[YaPlay] executing command:', command);
@@ -153,22 +128,32 @@ function playBtnClick() {
 function hotKeyCommand(command) {
     switch (command) {
         case 'play':
-            executeYandexMusicCommand(togglePlaybackCommand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(togglePlaybackCommand).catch((msg) => { onError(msg) });
             break;
         case 'previous':
-            executeYandexMusicCommand(previousSongCommand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(previousSongCommand).catch((msg) => { onError(msg) });
             break;
         case 'next':
-            executeYandexMusicCommand(nextSongCommand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(nextSongCommand).catch((msg) => { onError(msg) });
             break;
         case 'mute':
-            executeYandexMusicCommand(toogleMuteComand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(toogleMuteCommand).catch((msg) => { onError(msg) });
             break;
         case 'volumeUp':
-            executeYandexMusicCommand(volumeUpComand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(volumeUpCommand).catch((msg) => { onError(msg) });
             break;
         case 'volumeDown':
-            executeYandexMusicCommand(volumeDownComand).catch((msg) => { onError(msg) })
+            executeYandexMusicCommand(volumeDownCommand).catch((msg) => { onError(msg) });
+            break;
+        case 'copyLink':
+            executeYandexMusicCommand(copyLinkToSongCommand)
+            .then(() => { browser.notifications.create({
+                    type: `basic`,
+                    title: browser.i18n.getMessage('copyLinkToSong'),
+                    message: browser.i18n.getMessage('copyLinkToSongMessage')
+                });
+            })
+            .catch((msg) => { onError(msg) });
             break;
         default: console.log(`[YaPlay] Command ${command} not found `);
     }
@@ -214,7 +199,25 @@ browser.contextMenus.create({
         16: 'icons/mute_16.png',
         32: 'icons/mute_32.png'
     },
-    onclick: () => executeYandexMusicCommand(toogleMuteComand).catch((msg) => { onError(msg) })
+    onclick: () => executeYandexMusicCommand(toogleMuteCommand).catch((msg) => { onError(msg) })
+});
+
+browser.contextMenus.create({
+    id: 'copy-link-tab-menu-item',
+    title: browser.i18n.getMessage('copyLinkToSong'),
+    contexts: ['browser_action'],
+    icons: {
+        16: 'icons/link_16.png',
+        32: 'icons/link_32.png'
+    },
+    onclick: () => executeYandexMusicCommand(copyLinkToSongCommand)
+    .then(() => { browser.notifications.create({
+            type: `basic`,
+            title: browser.i18n.getMessage('copyLinkToSong'),
+            message: browser.i18n.getMessage('copyLinkToSongMessage')
+        });
+    })
+    .catch((msg) => { onError(msg) })
 });
 
 browser.contextMenus.create({
