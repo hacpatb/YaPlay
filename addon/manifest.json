@@ -3,7 +3,7 @@
   "name": "Yandex Play",
   "author": "Pave Goncharov",
   "description": "__MSG_extensionDescription__",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "default_locale": "en",
   "icons": {
     "64": "icons/play_64.png"
@@ -69,6 +69,12 @@
         "default": "Alt+6"
       },
       "description": "__MSG_volumeDown__"
+    },
+    "copyLink": {
+      "suggested_key": {
+        "default": "Alt+7"
+      },
+      "description": "__MSG_copyLinkToSong__"
     }
   },
   "applications": {
@@ -81,6 +87,7 @@
     "tabs",
     "contextMenus",
     "activeTab",
+    "clipboardWrite",
     "<all_urls>"
   ]
 }

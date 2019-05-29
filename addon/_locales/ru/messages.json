@@ -32,6 +32,12 @@
   "settingHotKeys": {
     "message": "Настройка горячих клавиш"
   },
+  "copyLinkToSong": {
+    "message": "Ссылка на песню"
+  },
+  "copyLinkToSongMessage": {
+    "message": "Ссылка на песню скопирована в буфер"
+  },
   "notificationContent": {
     "message": "Список поддерживаемых сочетаний клавиш можно найти <a href=\"$URL$\">здесь</a>.",
     "placeholders": {
