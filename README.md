@@ -1,5 +1,5 @@
 ### Этим кто-то пользуется: 
-![Mozilla Add-on](https://img.shields.io/amo/users/yaplay)
+[![Mozilla Add-on](https://img.shields.io/amo/users/yaplay)](https://addons.mozilla.org/ru/firefox/addon/yaplay/)
 
 ### Возможность вывести кнопку на панель для остановки и возобновления воспроизведения музыки (для яндекс музыки) не переключаясь на вкладку.
 - При двойном нажатии переключение на следующий трек.
